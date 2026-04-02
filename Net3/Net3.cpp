@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <stdexcept> 
 
 template <typename T>
@@ -21,7 +21,41 @@ private:
         delete[] data;                
         data = new_data;             
     }
+    MyVector(const MyVector& other) {
+        v_size = other.v_size;
+        v_capacity = other.v_capacity;
 
+        if (v_capacity > 0) {
+            data = new T[v_capacity];
+            for (size_t i = 0; i < v_size; ++i) {
+                data[i] = other.data[i];
+            }
+        }
+        else {
+            data = nullptr;
+        }
+    }
+    MyVector& operator=(const MyVector& other) {
+        if (this == &other) {
+            return *this;
+        }
+        delete[] data;
+        
+        v_size = other.v_size;
+        v_capacity = other.v_capacity;
+
+        if (v_capacity > 0) {
+            data = new T[v_capacity];
+            for (size_t i = 0; i < v_size; ++i) {
+                data[i] = other.data[i];
+            }
+        }
+        else {
+            data = nullptr;
+        }
+
+        return *this;
+    }
 public:
     MyVector() : data(nullptr), v_size(0), v_capacity(0) {}
 
